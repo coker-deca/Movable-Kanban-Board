@@ -5,18 +5,10 @@
             "Title": "First Task",
             "BoardId": 1,
             "Description": "This is the first Task",
-            "CreatedAt": {
-                "string": {}
-            },
-            "Status": {
-                "string": {}
-            },
-            "Assignee": {
-                "string": {}
-            },
-            "Reporter": {
-                "string": {}
-            }
+            "CreatedAt": "12/03/2022",
+            "Status": "Todo",
+            "Assignee": "Tosin Coker",
+            "Reporter": "Made with Love"
         }
     ],
     "Boards": [
