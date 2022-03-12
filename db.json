@@ -1,0 +1,35 @@
+{
+    "Tasks": [
+        {
+            "id": 1,
+            "Title": "First Task",
+            "BoardId": 1,
+            "Description": "This is the first Task",
+            "CreatedAt": {
+                "string": {}
+            },
+            "Status": {
+                "string": {}
+            },
+            "Assignee": {
+                "string": {}
+            },
+            "Reporter": {
+                "string": {}
+            }
+        }
+    ],
+    "Boards": [
+        {
+            "Title": "First Project",
+            "id": 1
+        }
+    ],
+    "Comments": [
+        {
+            "comment": "This works.",
+            "id": 1,
+            "taskId": 1
+        }
+    ]
+}
