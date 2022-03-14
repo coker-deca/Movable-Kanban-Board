@@ -7,7 +7,7 @@ export interface Comments {
 export interface Task {
     id: number,
     Title: string,
-    BoardId?: number,
+    BoardId: number,
     Description?: string,
     CreatedAt?: string,
     Status?: string,

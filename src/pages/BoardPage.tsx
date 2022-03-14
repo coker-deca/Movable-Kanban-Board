@@ -17,8 +17,8 @@ function BoardPage(): ReactElement {
 
   return (
     <Container width="80%">
-      <Button>Add Board</Button>
       <Wrapper>
+        <Button>Add Board</Button>
         {data?.map((board) => (
           <BoardCell
             title={board.Title}
