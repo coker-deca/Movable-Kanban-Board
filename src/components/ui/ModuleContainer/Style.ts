@@ -8,17 +8,25 @@ const StyledModuleContainer = styled(StyledContainer)`
     flex-direction: row;
     justify-content: space-between;
     overflow-x: scroll;
+    min-height: 80vh;
     
     .module {
         /* color: ${MainColors.white}; */
+        background: ${MainColors.disabled};
         cursor: pointer;
         width: 20%;
         min-width: 150px;
+        min-height:100%;
         padding: 5px;
-        background: ${MainColors.white};
-        height: 100%;
+        border-radius: 5px;
         flex-wrap: nowrap;
         white-space: nowrap;
+        border:2px solid ${MainColors.grey};
+        
+        .task_box{
+            background: ${MainColors.white};
+            cursor: move;
+        }
     }
 `;
 
