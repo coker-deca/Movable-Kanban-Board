@@ -5,7 +5,7 @@ import { Board, Comments, Task } from '../constants/types';
 export const boardApi = createApi({
   reducerPath: 'boardApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://my-json-server.typicode.com/coker-deca/fake-server',
+    baseUrl: 'https://my-json-server.typicode.com/coker-deca/fake-server',headers:{'content-type':'application/json'}
   }),
   tagTypes: ['Boards', 'Comments', 'Tasks'],
   endpoints: (builder) => ({
@@ -20,15 +20,15 @@ export const boardApi = createApi({
       query: () => ({ url: '/tasks', method: 'GET' }),
       providesTags: [{ type: 'Tasks', id: 'LIST' }],
     }),
-    addTasks: builder.mutation<Task[], Task[]>({
-      query: () => ({ url: '/tasks', method: 'POST' }),
+    addTasks: builder.mutation<Task, Task>({
+      query: (task) => ({ url: '/tasks', method: 'POST',body: task}),
       invalidatesTags: [{ type: 'Tasks', id: 'LIST' }],
     }),
     getComments: builder.query<Comments[], void>({
       query: () => ({ url: '/comments', method: 'GET' }),
       providesTags: [{ type: 'Comments', id: 'LIST' }],
     }),
-    addComments: builder.mutation<Comments[], Comments[]>({
+    addComments: builder.mutation<Comments[], Comments>({
       query: () => ({ url: '/comments', method: 'POST' }),
       invalidatesTags: [{ type: 'Comments', id: 'LIST' }],
     }),

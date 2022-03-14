@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import React, { PropsWithChildren, ReactElement } from 'react';
 
 import stages from '../../../constants/kanbanStages';
@@ -14,9 +13,9 @@ function ModuleContainer({
       .map((item) => <p key={item.id}>{item.Title}</p>);
   return (
     <StyledModuleContainer width="90%">
-      {stages.map((stage, idx) => (
-        <div className="module" key={idx}>
-          <h2 key={idx}>{stage}</h2>
+      {stages.map((stage) => (
+        <div className="module" key={stage}>
+          <h2>{stage}</h2>
           {renderTasks(data, stage)}
         </div>
       ))}

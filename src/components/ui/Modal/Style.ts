@@ -15,6 +15,11 @@ export const Dialog = styled.div`
   z-index: 1;
   perspective: 1px;
 
+  .error {
+    color:${MainColors.error};
+    padding:10px;
+  }
+
     .content-wrapper {
         border-radius: 5px;
         overflow: hidden;
