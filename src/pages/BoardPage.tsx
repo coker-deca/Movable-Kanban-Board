@@ -12,7 +12,6 @@ function BoardPage(): ReactElement {
   const navigate = useNavigate();
 
   const linkToBoard = (id: number) => {
-    console.log(id);
     navigate(`/boards/${id}`);
   };
 

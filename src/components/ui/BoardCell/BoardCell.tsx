@@ -7,7 +7,7 @@ interface CellProps {
   handleClick: () => void;
 }
 
-function Container({ title, handleClick }: CellProps): ReactElement {
+function BoardCell({ title, handleClick }: CellProps): ReactElement {
   return (
     <StyledCell width="200px" onClick={handleClick}>
       <h2>{title}</h2>
@@ -15,4 +15,4 @@ function Container({ title, handleClick }: CellProps): ReactElement {
   );
 }
 
-export default Container;
+export default BoardCell;

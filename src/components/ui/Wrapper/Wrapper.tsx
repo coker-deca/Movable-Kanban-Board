@@ -1,9 +1,9 @@
 import React, { PropsWithChildren, ReactElement, ReactNode } from 'react';
 
-import StyledContainer from './Style';
+import StyledWrapper from './Style';
 
-function Container({ children }: PropsWithChildren<ReactNode>): ReactElement {
-  return <StyledContainer>{children}</StyledContainer>;
+function Wrapper({ children }: PropsWithChildren<ReactNode>): ReactElement {
+  return <StyledWrapper>{children}</StyledWrapper>;
 }
 
-export default Container;
+export default Wrapper;

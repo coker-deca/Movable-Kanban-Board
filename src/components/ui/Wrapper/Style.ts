@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledContainer = styled.div`
+const StyledWrapper = styled.div`
   margin: auto;
   max-width: 60rem;
   font-family: DM Sans;
@@ -8,4 +8,4 @@ const StyledContainer = styled.div`
 
 `;
 
-export default StyledContainer;
+export default StyledWrapper;
