@@ -15,7 +15,7 @@ const StyledButton = styled.button`
   color: ${props=>props.style?.color || MainColors.white};
   border-radius: ${props => props.style?.borderRadius || "5px" };
   border: ${props=>props.style?.border || "none"};
-  background: ${props=>props.style?.background || MainColors['indexify-blue']};
+  background: ${props=>props.style?.background || MainColors.blue};
   transition: background-color 0.3s ease-out;
   font-style: normal;
   font-weight: bold;
@@ -23,7 +23,7 @@ const StyledButton = styled.button`
   line-height: 18px;
 
   &:hover {
-    background: ${props=>props.style?.backgroundColor || MainColors['button-hover']};
+    background: ${props=>props.style?.backgroundColor || MainColors.buttonHover};
   }
 
   &:focus,

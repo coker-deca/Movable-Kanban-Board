@@ -21,3 +21,9 @@ export interface Board {
     tasks?: Task[],
     Title: string,
 }
+
+export interface RouteI {
+    path: string;
+    component?: React.FC;
+    isProtected: boolean;
+}
