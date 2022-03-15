@@ -1,4 +1,12 @@
-import React, { ChangeEvent, ChangeEventHandler, MouseEvent, MouseEventHandler, PropsWithRef, useState } from 'react';
+import React, {
+  ChangeEvent,
+  ChangeEventHandler,
+  MouseEvent,
+  MouseEventHandler,
+  PropsWithRef,
+  useEffect,
+  useState,
+} from 'react';
 
 import stages from '../../../constants/kanbanStages';
 import { Task } from '../../../constants/types';
@@ -6,27 +14,28 @@ import Button from '../Button/Button';
 import StyledForm from './Style';
 
 interface NewTaskProps {
-  boardId: number;
-  nextTaskId: number;
-  handleSave: (task: Task) => void;
+  task: Task;
+  saveButton?: boolean;
+  handleSave?: (task: Task) => void;
+  updateButton?: boolean;
+  handleUpdate?: (task: Task) => void;
 }
 function NewTaskForm({
-  boardId,
-  nextTaskId,
+  task,
+  saveButton,
+  updateButton,
   handleSave,
+  handleUpdate,
 }: PropsWithRef<NewTaskProps>) {
-  const defaultState: Task = {
-    BoardId: boardId,
-    id: nextTaskId,
-    Title: '',
-    CreatedAt: Date.now(),
-  };
+  const [newTask, setNewTask] = useState<Task>(task);
 
-  const [newTask, setNewTask] = useState<Task>(defaultState);
-
-  const onclick: MouseEventHandler = (e: MouseEvent<HTMLButtonElement>) => {
+  const onSave: MouseEventHandler = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    handleSave(newTask);
+    if (handleSave) handleSave(newTask);
+  };
+  const onUpdate: MouseEventHandler = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (handleUpdate) handleUpdate(newTask);
   };
   const handleFormUpdate: ChangeEventHandler = (
     e: ChangeEvent<HTMLInputElement>
@@ -35,6 +44,10 @@ function NewTaskForm({
     const { name, value } = field;
     setNewTask((prev) => ({ ...prev, [name]: value }));
   };
+
+  useEffect(() => {
+    setNewTask(task);
+  }, [task]);
 
   return (
     <StyledForm>
@@ -101,7 +114,10 @@ function NewTaskForm({
           />
         </label>
       </div>
-      <Button onClick={onclick}>Save Task</Button>
+      {saveButton && handleSave && <Button onClick={onSave}>Save Task</Button>}
+      {updateButton && handleUpdate && (
+        <Button onClick={onUpdate}>Update Task</Button>
+      )}
     </StyledForm>
   );
 }

@@ -13,8 +13,10 @@ import { useAddTasksMutation, useGetTasksQuery } from '../services';
 
 function BoardItem(): ReactElement {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [task, setTask] = useState<Task>();
   const [error, setError] = useState<any>();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isNew, setIsNew] = useState(false);
   const { data } = useGetTasksQuery();
   const { id } = useParams();
   const [add, { isSuccess, error: fetchError }] = useAddTasksMutation();
@@ -28,8 +30,14 @@ function BoardItem(): ReactElement {
     setIsModalOpen(state);
   };
   const createNewTask = () => {
+    setIsNew(true);
     handleToggleModal(true);
   };
+  const updateTask = (existingTask: Task) => {
+    console.log(existingTask);
+    if (isSuccess) handleToggleModal(false);
+  };
+
   const saveNewTask = async (newTask: Task) => {
     try {
       if (newTask.Title) {
@@ -44,26 +52,39 @@ function BoardItem(): ReactElement {
     }
   };
 
+  const handleUpdate = (taskData: Task) => {
+    setIsNew(false);
+    handleToggleModal(true);
+    setTask(taskData);
+  };
+  const renderUpdateTask = () =>
+    task && <NewTaskForm task={task} updateButton handleUpdate={updateTask} />;
+
+  const renderNewTask = (taskData: Task[]) => {
+    const defaultState: Task = {
+      BoardId: Number.parseInt(id!, 10),
+      id: taskData[taskData.length - 1].id + 1,
+      Title: '',
+      CreatedAt: Date.now(),
+    };
+    return (
+      <NewTaskForm task={defaultState} saveButton handleSave={saveNewTask} />
+    );
+  };
   useEffect(() => {
     if (data) getTasks(data);
-  }, [data, error]);
+  }, [data, isNew, task, error]);
   return (
     <ModalProvider>
       <Container width="80%">
         <Wrapper>
           <Button onClick={createNewTask}>New Task</Button>
         </Wrapper>
-        {data && <ModuleContainer data={tasks} />}
+        {data && <ModuleContainer data={tasks} openTask={handleUpdate} />}
       </Container>
       {isModalOpen && (
         <Modal onClose={() => handleToggleModal(false)}>
-          {data && id && (
-            <NewTaskForm
-              boardId={Number.parseInt(id, 10)}
-              nextTaskId={data[data.length - 1].id + 1}
-              handleSave={saveNewTask}
-            />
-          )}
+          {isNew ? renderNewTask(data!) : renderUpdateTask()}
           <p className="error">{error && error.message}</p>
         </Modal>
       )}
