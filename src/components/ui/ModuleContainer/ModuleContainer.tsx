@@ -3,8 +3,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { PropsWithChildren, ReactElement, useEffect, useRef, useState } from 'react';
 
-import stages from '../../../constants/kanbanStages';
-import { Task } from '../../../constants/types';
+import stages from '../../../utils/constants/kanbanStages';
+import { Task } from '../../../utils/constants/types';
 import Card from '../Card/Card';
 import StyledModuleContainer from './Style';
 

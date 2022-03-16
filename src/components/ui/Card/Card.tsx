@@ -4,7 +4,7 @@ import React from 'react';
 import Draggable from 'react-draggable';
 import { CgOptions } from 'react-icons/cg';
 
-import { Task } from '../../../constants/types';
+import { Task } from '../../../utils/constants/types';
 import date from '../../lib/date';
 import MovableStyledCard from './Style';
 

@@ -8,8 +8,8 @@ import React, {
   useState,
 } from 'react';
 
-import stages from '../../../constants/kanbanStages';
-import { Task } from '../../../constants/types';
+import stages from '../../../utils/constants/kanbanStages';
+import { Task } from '../../../utils/constants/types';
 import Button from '../Button/Button';
 import StyledForm, { SideBar, StyledFooter } from './Style';
 

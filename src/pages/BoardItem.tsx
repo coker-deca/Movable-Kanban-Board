@@ -7,9 +7,9 @@ import Modal from '../components/ui/Modal/Modal';
 import ModuleContainer from '../components/ui/ModuleContainer/ModuleContainer';
 import NewTaskForm from '../components/ui/NewTaskForm/NewTaskForm';
 import Wrapper from '../components/ui/Wrapper/Wrapper';
-import { Task } from '../constants/types';
 import ModalProvider from '../contexts/ModalContext';
-import { useAddTasksMutation, useGetTasksQuery, useUpdateTasksMutation } from '../services';
+import { Task } from '../utils/constants/types';
+import { useAddTasksMutation, useGetTasksQuery, useUpdateTasksMutation } from '../utils/services';
 
 function BoardItem(): ReactElement {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -33,10 +33,9 @@ function BoardItem(): ReactElement {
     setIsNew(true);
     handleToggleModal(true);
   };
-  const [updateTask, { isLoading: isUpdating, isSuccess: updateSuccess }] =
+  const [updateTask, { isSuccess: updateSuccess }] =
     useUpdateTasksMutation();
   const updaterTask = (updatedTask: Task) => {
-    console.log(isUpdating);
     updateTask(updatedTask);
     if (updateSuccess) handleToggleModal(false);
   };

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import MainColors from '../../../constants/colors';
+import MainColors from '../../../utils/constants/colors';
 
 const MovableStyledCard = styled.div`
     background: ${MainColors.white};

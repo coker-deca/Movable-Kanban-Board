@@ -5,7 +5,7 @@ import BoardCell from '../components/ui/BoardCell/BoardCell';
 import Button from '../components/ui/Button/Button';
 import Container from '../components/ui/Container/Container';
 import Wrapper from '../components/ui/Wrapper/Wrapper';
-import { useGetBoardsQuery } from '../services';
+import { useGetBoardsQuery } from '../utils/services';
 
 function BoardPage(): ReactElement {
   const { data } = useGetBoardsQuery();

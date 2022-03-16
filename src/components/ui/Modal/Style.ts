@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import MainColors from '../../../constants/colors';
+import MainColors from '../../../utils/constants/colors';
 
 export const Dialog = styled.div`
   background: ${MainColors.white};
