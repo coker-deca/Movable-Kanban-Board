@@ -9,7 +9,7 @@ import NewTaskForm from '../components/ui/NewTaskForm/NewTaskForm';
 import Wrapper from '../components/ui/Wrapper/Wrapper';
 import { Task } from '../constants/types';
 import ModalProvider from '../contexts/ModalContext';
-import { useAddTasksMutation, useGetTasksQuery } from '../services';
+import { useAddTasksMutation, useGetTasksQuery, useUpdateTasksMutation } from '../services';
 
 function BoardItem(): ReactElement {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -33,9 +33,12 @@ function BoardItem(): ReactElement {
     setIsNew(true);
     handleToggleModal(true);
   };
-  const updateTask = (existingTask: Task) => {
-    console.log(existingTask);
-    if (isSuccess) handleToggleModal(false);
+  const [updateTask, { isLoading: isUpdating, isSuccess: updateSuccess }] =
+    useUpdateTasksMutation();
+  const updaterTask = (updatedTask: Task) => {
+    console.log(isUpdating);
+    updateTask(updatedTask);
+    if (updateSuccess) handleToggleModal(false);
   };
 
   const saveNewTask = async (newTask: Task) => {
@@ -58,14 +61,19 @@ function BoardItem(): ReactElement {
     setTask(taskData);
   };
   const renderUpdateTask = () =>
-    task && <NewTaskForm task={task} updateButton handleUpdate={updateTask} />;
+    task && <NewTaskForm task={task} updateButton handleUpdate={updaterTask} />;
 
   const renderNewTask = (taskData: Task[]) => {
     const defaultState: Task = {
       BoardId: Number.parseInt(id!, 10),
       id: taskData[taskData.length - 1].id + 1,
       Title: '',
+      Status: 'Todo',
+      Assignee: '',
+      Reporter: '',
       CreatedAt: Date.now(),
+      Comments: [],
+      Description: '',
     };
     return (
       <NewTaskForm task={defaultState} saveButton handleSave={saveNewTask} />
@@ -85,7 +93,7 @@ function BoardItem(): ReactElement {
       {isModalOpen && (
         <Modal onClose={() => handleToggleModal(false)}>
           {isNew ? renderNewTask(data!) : renderUpdateTask()}
-          <p className="error">{error && error.message}</p>
+          {error && <p className="error">{error.message}</p>}
         </Modal>
       )}
     </ModalProvider>

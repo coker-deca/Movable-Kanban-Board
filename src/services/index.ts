@@ -5,7 +5,7 @@ import { Board, Comments, Task } from '../constants/types';
 export const boardApi = createApi({
   reducerPath: 'boardApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://my-json-server.typicode.com/coker-deca/fake-server',headers:{'content-type':'application/json'}
+    baseUrl: 'https://tosin-fake-server.herokuapp.com/',headers:{'content-type':'application/json'}
   }),
   tagTypes: ['Boards', 'Comments', 'Tasks'],
   endpoints: (builder) => ({
@@ -22,6 +22,10 @@ export const boardApi = createApi({
     }),
     addTasks: builder.mutation<Task, Task>({
       query: (task) => ({ url: '/tasks', method: 'POST',body: task}),
+      invalidatesTags: [{ type: 'Tasks', id: 'LIST' }],
+    }),
+    updateTasks: builder.mutation<Task, Partial<Task> & Pick<Task, 'id'>>({
+      query: ({ id, ...patch }) => ({ url: `/tasks/${id}`, method: 'PATCH',body: patch}),
       invalidatesTags: [{ type: 'Tasks', id: 'LIST' }],
     }),
     getComments: builder.query<Comments[], void>({
@@ -42,4 +46,5 @@ export const {
   useAddBoardsMutation,
   useAddCommentsMutation,
   useAddTasksMutation,
+  useUpdateTasksMutation
 } = boardApi;

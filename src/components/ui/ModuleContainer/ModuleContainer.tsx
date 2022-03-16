@@ -15,7 +15,7 @@ function ModuleContainer({
   openTask: (task: Task) => void;
   data: Task[];
 }>): ReactElement {
-  const nodeRef = useRef(null);
+  const nodeRef = useRef<HTMLDivElement>();
   // const [activeDrags, setActiveDrags] = useState(0);
   const [deltaPosition, setDeltaPosition] = useState({ x: 0, y: 0 });
   // const onStart = () => {
@@ -38,8 +38,9 @@ function ModuleContainer({
       .map((item) => (
         <Card
           handleDrag={handleDrag}
+          key={item.id}
           task={item}
-          ref={nodeRef}
+          ref={nodeRef as React.RefObject<HTMLDivElement>}
           openTask={openTask}
         />
       ));

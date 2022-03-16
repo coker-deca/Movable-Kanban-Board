@@ -11,7 +11,7 @@ import React, {
 import stages from '../../../constants/kanbanStages';
 import { Task } from '../../../constants/types';
 import Button from '../Button/Button';
-import StyledForm from './Style';
+import StyledForm, { SideBar, StyledFooter } from './Style';
 
 interface NewTaskProps {
   task: Task;
@@ -51,73 +51,93 @@ function NewTaskForm({
 
   return (
     <StyledForm>
-      <div className="input">
-        <label htmlFor="Title">
-          Title:
-          <input
-            type="text"
-            value={newTask.Title}
-            name="Title"
-            onChange={handleFormUpdate}
-          />
-        </label>
+      <div className="left_side">
+        <div className="input">
+          <label htmlFor="Title">
+            Title:
+            <input
+              type="text"
+              value={newTask.Title}
+              name="Title"
+              onChange={handleFormUpdate}
+            />
+          </label>
+        </div>
+        <br />
+        <div className="input">
+          <label htmlFor="Description">
+            Description:
+            <textarea
+              value={newTask.Description}
+              name="Description"
+              onChange={handleFormUpdate}
+            />
+          </label>
+        </div>
+        <br />
       </div>
-      <br />
-      <div className="input">
-        <label htmlFor="Description">
-          Description:
-          <textarea
-            value={newTask.Description}
-            name="Description"
-            onChange={handleFormUpdate}
-          />
-        </label>
-      </div>
-      <br />
-      <div className="input">
-        <label htmlFor="Status">
-          Status:
-          <select
-            name="Status"
-            value={newTask.Status || 'Todo'}
-            onChange={handleFormUpdate}
-          >
-            {stages.map((stage) => (
-              <option value={stage} key={stage}>
-                {stage}
-              </option>
+      <SideBar>
+        <div className="input">
+          <label htmlFor="Status">
+            Status:
+            <select
+              name="Status"
+              value={newTask.Status || 'Todo'}
+              onChange={handleFormUpdate}
+            >
+              {stages.map((stage) => (
+                <option value={stage} key={stage}>
+                  {stage}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+        <br />
+        <div className="input">
+          <label htmlFor="Assignee">
+            Assignee:
+            <input
+              type="text"
+              value={newTask.Assignee}
+              name="Assignee"
+              onChange={handleFormUpdate}
+            />
+          </label>
+        </div>
+        <br />
+        <div className="input">
+          <label htmlFor="Reporter">
+            Reporter:
+            <input
+              type="text"
+              value={newTask.Reporter}
+              name="Reporter"
+              onChange={handleFormUpdate}
+            />
+          </label>
+        </div>
+      </SideBar>
+      <StyledFooter>
+        <input
+          type="text"
+          placeholder={saveButton?"Comment disabled for new Task":"Enter comments here and press Enter to submit"}
+          disabled={saveButton}
+        />
+        <div className="comment_box">
+          <div className="comments">
+            {newTask.Comments?.map((comment) => (
+              <p key={comment.id}>{comment}</p>
             ))}
-          </select>
-        </label>
-      </div>
-      <br />
-      <div className="input">
-        <label htmlFor="Assignee">
-          Assignee:
-          <input
-            type="text"
-            value={newTask.Assignee}
-            name="Assignee"
-            onChange={handleFormUpdate}
-          />
-        </label>
-      </div>
-      <br />
-      <div className="input">
-        <label htmlFor="Reporter">
-          Reporter:
-          <input
-            type="text"
-            value={newTask.Reporter}
-            name="Reporter"
-            onChange={handleFormUpdate}
-          />
-        </label>
-      </div>
-      {saveButton && handleSave && <Button onClick={onSave}>Save Task</Button>}
-      {updateButton && handleUpdate && (
-        <Button onClick={onUpdate}>Update Task</Button>
-      )}
+          </div>
+        </div>
+        {saveButton && handleSave && (
+          <Button onClick={onSave}>Save Task</Button>
+        )}
+        {updateButton && handleUpdate && (
+          <Button onClick={onUpdate}>Update Task</Button>
+        )}
+      </StyledFooter>
     </StyledForm>
   );
 }

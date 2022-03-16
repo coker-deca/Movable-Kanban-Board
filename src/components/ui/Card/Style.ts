@@ -23,4 +23,4 @@ const MovableStyledCard = styled.div`
     }
 `;
 
-export default MovableStyledCard
+export default MovableStyledCard;
