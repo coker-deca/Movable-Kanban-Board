@@ -14,6 +14,7 @@ import StyledModuleContainer from './Style';
 function ModuleContainer({
   data,
   openTask,
+  s,
 }: PropsWithChildren<{
   openTask: (task: Task) => void;
   data: Task[];
