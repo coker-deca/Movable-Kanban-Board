@@ -7,7 +7,7 @@ const StyledModuleContainer = styled(StyledContainer)`
     background: ${MainColors.grey};
     flex-direction: row;
     justify-content: space-between;
-    overflow-x: scroll;
+    overflow: scroll;
     min-height: 80vh;
     
     .module {

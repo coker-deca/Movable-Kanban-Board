@@ -10,7 +10,7 @@ export interface Task {
     BoardId: number,
     CreatedAt: number,
     Description?: string,
-    Status?: string,
+    Status: string,
     Assignee?: string,
     Reporter?: string,
     Comments?: Comments[],
