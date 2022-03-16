@@ -24,12 +24,11 @@ const Card = React.forwardRef<
   const onDrag: DraggableEventHandler = (e, ui) => {
     handleDrag(task, ui);
   };
-  const left = 0;
   return (
     <Draggable
       cancel=".cancel"
       key={task.id}
-      bounds={{ left: { left }, top: 0, bottom: 500, right: 820 }}
+      bounds={{ left: 0, top: 0, bottom: 500, right: 820 }}
       onDrag={onDrag}
       nodeRef={ref as React.RefObject<HTMLDivElement>}
       {...dragHandlers}
