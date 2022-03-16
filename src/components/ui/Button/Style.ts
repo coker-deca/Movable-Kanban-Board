@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import MainColors from '../../../utils/constants/colors';
 
 const StyledButton = styled.button`
+  height: 3rem;
     font-family: 'Dm Sans';
     display: ${props=>props.style?.padding || "grid"};
     place-items: center;
@@ -11,7 +12,7 @@ const StyledButton = styled.button`
     letter-spacing: -0.005em;
   cursor: pointer;
   text-align: center;
-  font-size: ${props => props.style?.fontSize || "0.688rem"};
+  font-size: ${props => props.style?.fontSize || "14px"};
   color: ${props=>props.style?.color || MainColors.white};
   border-radius: ${props => props.style?.borderRadius || "5px" };
   border: ${props=>props.style?.border || "none"};
@@ -19,7 +20,6 @@ const StyledButton = styled.button`
   transition: background-color 0.3s ease-out;
   font-style: normal;
   font-weight: bold;
-  font-size: 14px;
   line-height: 18px;
 
   &:hover {

@@ -11,10 +11,34 @@ export const boardApi = createApi({
   endpoints: (builder) => ({
     getBoards: builder.query<Board[], void>({
       query: () => ({ url: '/boards', method: 'GET' }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: 'Tasks' as const, id })),
+              { type: 'Boards', id: 'LIST' },
+            ]
+          : [{ type: 'Boards', id: 'LIST' }],
     }),
-    addBoards: builder.mutation<Board[], Board[]>({
-      query: () => ({ url: '/boards', method: 'POST' }),
+    getABoards: builder.query<Board, number>({
+      query: (id) => ({ url: `/boards/${id}`, method: 'GET' }),
+      providesTags: (result, error, id) => [{ type: 'Boards', id }],
+    }),
+    addBoards: builder.mutation<Board, Board>({
+      query: (board) => ({ url: '/boards', method: 'POST', body: board }),
       invalidatesTags: [{ type: 'Boards', id: 'LIST' }],
+    }),
+    updateBoard: builder.mutation<Board, Partial<Board> & Pick<Board, 'id'>>({
+      query: ({ id, ...patch }) => ({ url: `/Boards/${id}`, method: 'PATCH',body: patch}),
+      invalidatesTags: (result, error, { id }) => [{ type: 'Boards', id }],
+    }),
+    deleteBoard: builder.mutation<{ success: boolean; id: number }, number>({
+      query(id) {
+        return {
+          url: `Boards/${id}`,
+          method: 'DELETE',
+        }
+      },
+      invalidatesTags: (result, error, id) => [{ type: 'Boards', id }],
     }),
     getTasks: builder.query<Task[], void>({
       query: () => ({ url: '/tasks', method: 'GET' }),
@@ -56,11 +80,14 @@ export const boardApi = createApi({
 
 export const {
   useGetBoardsQuery,
+  useGetABoardsQuery,
   useGetCommentsQuery,
   useGetTasksQuery,
   useAddBoardsMutation,
   useAddCommentsMutation,
   useAddTasksMutation,
   useUpdateTasksMutation,
-  useDeleteTaskMutation
+  useUpdateBoardMutation,
+  useDeleteTaskMutation,
+  useDeleteBoardMutation
 } = boardApi;

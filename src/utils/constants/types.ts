@@ -18,7 +18,6 @@ export interface Task {
 
 export interface Board {
     id: number,
-    tasks?: Task[],
     Title: string,
 }
 
