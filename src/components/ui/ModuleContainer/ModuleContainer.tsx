@@ -3,6 +3,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { PropsWithChildren, ReactElement, useEffect, useRef, useState } from 'react';
 import { DraggableData, DraggableEventHandler } from 'react-draggable';
+import { CgOptions } from 'react-icons/cg';
 
 import stages from '../../../utils/constants/kanbanStages';
 import { Task } from '../../../utils/constants/types';
@@ -70,7 +71,11 @@ function ModuleContainer({
     <StyledModuleContainer width="90%">
       {stages.map((stage) => (
         <div className="module" key={stage}>
-          <h2>{stage}</h2>
+          <div className="header">
+            <h2>{stage}</h2>
+            <CgOptions />
+          </div>
+
           {renderTasks(data, stage)}
         </div>
       ))}

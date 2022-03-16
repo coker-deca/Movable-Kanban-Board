@@ -22,6 +22,11 @@ const StyledModuleContainer = styled(StyledContainer)`
         flex-wrap: nowrap;
         white-space: nowrap;
         border:2px solid ${MainColors.grey};
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+        }
     }
 `;
 

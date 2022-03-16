@@ -18,7 +18,13 @@ export const boardApi = createApi({
     }),
     getTasks: builder.query<Task[], void>({
       query: () => ({ url: '/tasks', method: 'GET' }),
-      providesTags: [{ type: 'Tasks', id: 'LIST' }],
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: 'Tasks' as const, id })),
+              { type: 'Tasks', id: 'LIST' },
+            ]
+          : [{ type: 'Tasks', id: 'LIST' }],
     }),
     addTasks: builder.mutation<Task, Task>({
       query: (task) => ({ url: '/tasks', method: 'POST',body: task}),
@@ -26,7 +32,16 @@ export const boardApi = createApi({
     }),
     updateTasks: builder.mutation<Task, Partial<Task> & Pick<Task, 'id'>>({
       query: ({ id, ...patch }) => ({ url: `/tasks/${id}`, method: 'PATCH',body: patch}),
-      invalidatesTags: [{ type: 'Tasks', id: 'LIST' }],
+      invalidatesTags: (result, error, { id }) => [{ type: 'Tasks', id }],
+    }),
+    deleteTask: builder.mutation<{ success: boolean; id: number }, number>({
+      query(id) {
+        return {
+          url: `Tasks/${id}`,
+          method: 'DELETE',
+        }
+      },
+      invalidatesTags: (result, error, id) => [{ type: 'Tasks', id }],
     }),
     getComments: builder.query<Comments[], void>({
       query: () => ({ url: '/comments', method: 'GET' }),
@@ -46,5 +61,6 @@ export const {
   useAddBoardsMutation,
   useAddCommentsMutation,
   useAddTasksMutation,
-  useUpdateTasksMutation
+  useUpdateTasksMutation,
+  useDeleteTaskMutation
 } = boardApi;
