@@ -1,9 +1,35 @@
-import React from 'react';
+/* eslint-disable import/no-extraneous-dependencies */
 import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { Provider } from 'react-redux';
+import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe('With React Testing Library', () => {
+  const initialState = { output: 10 };
+  const middlewares = [thunk];
+  const mockStore = configureStore(middlewares);
+  let store: MockStoreEnhanced<any, any>;
+
+  it('Shows "Hello world!"', () => {
+    store = mockStore(initialState);
+    const { getByText } = render(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
+    expect(getByText('Add Board')).not.toBeNull();
+  });
+
+  it('renders learn react link', () => {
+    render(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
+    const linkElement = screen.getByRole('button');
+    expect(linkElement).toBeInTheDocument();
+  });
 });
