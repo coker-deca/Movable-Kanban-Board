@@ -1,6 +1,7 @@
 import React, {
   ChangeEvent,
   ChangeEventHandler,
+  KeyboardEvent,
   MouseEvent,
   MouseEventHandler,
   PropsWithRef,
@@ -10,6 +11,7 @@ import React, {
 
 import stages from '../../../utils/constants/kanbanStages';
 import { Task } from '../../../utils/constants/types';
+import { useAddCommentMutation, useGetCommentsQuery } from '../../../utils/services';
 import Button from '../Button/Button';
 import StyledForm, { SideBar, StyledFooter } from './Style';
 
@@ -28,6 +30,17 @@ function NewTaskForm({
   handleUpdate,
 }: PropsWithRef<NewTaskProps>) {
   const [newTask, setNewTask] = useState<Task>(task);
+  const [newComment, setNewComment] = useState('');
+
+  const { data: comments } = useGetCommentsQuery();
+  const [addComment] = useAddCommentMutation();
+
+  const handleSubmit = (e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      addComment({ taskId: task.id, comment: newComment, user: 'User-1' });
+      setNewComment('');
+    }
+  };
 
   const onSave: MouseEventHandler = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -121,14 +134,25 @@ function NewTaskForm({
       <StyledFooter>
         <input
           type="text"
-          placeholder={saveButton?"Comment disabled for new Task":"Enter comments here and press Enter to submit"}
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          onKeyDown={handleSubmit}
+          placeholder={
+            saveButton
+              ? 'Comment disabled for new Task'
+              : 'Enter comments here and press Enter to submit'
+          }
           disabled={saveButton}
         />
         <div className="comment_box">
           <div className="comments">
-            {newTask.Comments?.map((comment) => (
-              <p key={comment.id}>{comment}</p>
-            ))}
+            {comments
+              ?.filter((comment) => comment.taskId === task.id)
+              .map((comment) => (
+                <p key={comment.id}>
+                  {comment.user || 'Anonymous'}: {comment.comment}
+                </p>
+              ))}
           </div>
         </div>
         {saveButton && handleSave && (

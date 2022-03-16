@@ -1,6 +1,7 @@
 export interface Comments {
-    id: number,
+    id?: number,
     comment: string,
+    user: string,
     taskId: number,
 }
 
@@ -13,7 +14,6 @@ export interface Task {
     Status: string,
     Assignee?: string,
     Reporter?: string,
-    Comments?: Comments[],
 }
 
 export interface Board {

@@ -13,14 +13,14 @@ describe('With React Testing Library', () => {
   const mockStore = configureStore(middlewares);
   let store: MockStoreEnhanced<any, any>;
 
-  it('Shows "Hello world!"', () => {
+  it('Shows Button Text', () => {
     store = mockStore(initialState);
     const { getByText } = render(
       <Provider store={store}>
         <App />
       </Provider>
     );
-    expect(getByText('Add Board')).not.toBeNull();
+    expect(getByText('Create Project')).not.toBeNull();
   });
 
   it('renders learn react link', () => {

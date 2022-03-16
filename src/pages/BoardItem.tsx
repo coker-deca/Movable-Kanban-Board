@@ -72,7 +72,6 @@ function BoardItem(): ReactElement {
       Assignee: '',
       Reporter: '',
       CreatedAt: Date.now(),
-      Comments: [],
       Description: '',
     };
     return (

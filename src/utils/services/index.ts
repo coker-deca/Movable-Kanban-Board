@@ -71,9 +71,22 @@ export const boardApi = createApi({
       query: () => ({ url: '/comments', method: 'GET' }),
       providesTags: [{ type: 'Comments', id: 'LIST' }],
     }),
-    addComments: builder.mutation<Comments[], Comments>({
-      query: () => ({ url: '/comments', method: 'POST' }),
+    addComment: builder.mutation<Comments, Comments>({
+      query: (comment) => ({ url: '/comments', method: 'POST', body: comment }),
       invalidatesTags: [{ type: 'Comments', id: 'LIST' }],
+    }),
+    updateComment: builder.mutation<Comments, Partial<Comments> & Pick<Comments, 'id'>>({
+      query: ({ id, ...patch }) => ({ url: `/tasks/${id}`, method: 'PATCH',body: patch}),
+      invalidatesTags: (result, error, { id }) => [{ type: 'Comments', id }],
+    }),
+    deleteComment: builder.mutation<{ success: boolean; id: number }, number>({
+      query(id) {
+        return {
+          url: `Tasks/${id}`,
+          method: 'DELETE',
+        }
+      },
+      invalidatesTags: (result, error, id) => [{ type: 'Comments', id }],
     }),
   }),
 });
@@ -84,10 +97,12 @@ export const {
   useGetCommentsQuery,
   useGetTasksQuery,
   useAddBoardsMutation,
-  useAddCommentsMutation,
+  useAddCommentMutation,
   useAddTasksMutation,
   useUpdateTasksMutation,
   useUpdateBoardMutation,
+  useUpdateCommentMutation,
   useDeleteTaskMutation,
-  useDeleteBoardMutation
+  useDeleteBoardMutation,
+  useDeleteCommentMutation
 } = boardApi;

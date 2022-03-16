@@ -53,6 +53,9 @@ export const StyledFooter = styled.div`
         width: 70%;
         p {
             width: 1000%;
+            font-size: 10px;
+            padding:5px;
+            margin: 0;
         }
     }
 `;
