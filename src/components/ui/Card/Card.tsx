@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useEffect } from 'react';
+import React from 'react';
 import Draggable, { DraggableEventHandler } from 'react-draggable';
 import { IoMdTrash } from 'react-icons/io';
 
@@ -9,10 +9,6 @@ import { Task } from '../../../utils/constants/types';
 import { useDeleteTaskMutation } from '../../../utils/services';
 import date from '../../lib/date';
 import MovableStyledCard from './Style';
-
-// import { useDispatch } from 'react-redux';
-
-// import { useNavigate } from 'react-router-dom';
 
 interface DragProps {
   handleDrag: (task: Task, ui: any) => void;
@@ -26,15 +22,11 @@ const Card = React.forwardRef<
   HTMLDivElement,
   DragProps & Omit<JSX.IntrinsicElements['div'], 'ref'>
 >(({ handleDrag, task, openTask, dragHandlers }, ref) => {
-  // const navigate = useNavigate();
   const onDrag: DraggableEventHandler = (e, ui) => {
     handleDrag(task, ui);
   };
   const [deleteTask, { isSuccess }] = useDeleteTaskMutation();
-  // const dispatch = useDispatch();
-  useEffect(() => {
-    console.log(isSuccess);
-  }, [isSuccess]);
+
   return (
     <Draggable
       cancel=".cancel"

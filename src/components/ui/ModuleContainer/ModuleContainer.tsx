@@ -30,12 +30,10 @@ function ModuleContainer({
   };
 
   const onStart: DraggableEventHandler = () => {
-    console.log('start');
     setActiveDrags((prev) => ++prev);
   };
 
   const onStop: DraggableEventHandler = () => {
-    console.log('stop');
     setActiveDrags((prev) => --prev);
   };
 
